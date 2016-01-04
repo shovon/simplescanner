@@ -10,7 +10,7 @@ This is just me practicing to write a scanner application for camera photos. Ins
 ## Usage
 
 ```
-./simplescanner <path to photograph>
+./simplescanner <source image> <dest image>
 ```
 
 ## Compiling
