@@ -29,7 +29,7 @@ And you should be all good to go.
 
 ## Credit
 
-*Automatic perspective correction for quadrilateral objects* -- http://opencv-code.com/tutorials/automatic-perspective-correction-for-quadrilateral-objects/
-*perspective correction for quadrilateral markers* -- http://qtandopencv.blogspot.ca/2013/10/perspective-correction-for.html
-*Canny Edge Detector* -- http://docs.opencv.org/2.4/doc/tutorials/imgproc/imgtrans/canny_detector/canny_detector.html
-*Answer to: OpenCV C++/Obj-C: Detecting a sheet of paper / Square Detection* -- http://stackoverflow.com/a/8863060/538570
+*Automatic perspective correction for quadrilateral objects* -- http://opencv-code.com/tutorials/automatic-perspective-correction-for-quadrilateral-objects/    
+*perspective correction for quadrilateral markers* -- http://qtandopencv.blogspot.ca/2013/10/perspective-correction-for.html    
+*Canny Edge Detector* -- http://docs.opencv.org/2.4/doc/tutorials/imgproc/imgtrans/canny_detector/canny_detector.html    
+*Answer to: OpenCV C++/Obj-C: Detecting a sheet of paper / Square Detection* -- http://stackoverflow.com/a/8863060/538570    
