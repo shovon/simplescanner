@@ -1,6 +1,6 @@
 # Simple Optical Scanner
 
-This is just me practicing to write a scanner application for camera photos. Instead of using an actual scanner, use this program to extract document content from a photograph, removing all the background, and adjusting the document perspective. Who needs scanners, anyways?
+Instead of using an actual scanner, use this program to extract document content from a photograph, removing all the background, and adjusting the document perspective. Who needs scanners, anyways?
 
 **This is still a work in progress**.
 
