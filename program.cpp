@@ -99,33 +99,36 @@ cv::Point2f getDimensions(const std::vector<cv::Point> &corners) {
   return cv::Point2f(w, h);
 }
 
-void cannyEdgeMethod(cv::Mat image) {
-  cv::imshow("The image", image);
-
+void cannyEdgeMethod(const cv::Mat& image, cv::Mat& output) {
   // Step 2: get the edges.
 
   cv::Mat shrunk;
-  cv::resize(image, shrunk, cv::Size(image.cols / 8, image.rows / 8));
+
+  float scaleFactor = 1;
+  if (image.rows > 640 || image.cols > 640) {
+    if (image.cols > image.rows) {
+      scaleFactor = 640. / ((float) image.cols);
+    } else {
+      scaleFactor = 640. / ((float) image.rows);
+    }
+  }
+
+  std::cout << scaleFactor << std::endl;
+
+  cv::resize(image, shrunk, cv::Size(image.cols * scaleFactor, image.rows * scaleFactor));
 
   // Step 2.1: get a blurred image.
   cv::Mat blurred = shrunk.clone();
   cv::blur( blurred, blurred, cv::Size(3,3) );
 
-  cv::imshow("blurred", blurred);
-
   // Step 2.2: get the edges
   cv::Mat edges;
   cv::Canny(blurred, edges, 100, 255);
-
-  cv::imshow("Edges", edges);
-  cv::imwrite("edges.jpg", edges);
-  cv::waitKey();
 
   auto contours = findContours(edges);
 
   cv::Mat contourMap = cv::Mat::zeros(edges.size(), CV_8U);
   cv::drawContours(contourMap, contours, -1, cv::Scalar(255));
-  cv::imshow("contour map", contourMap);
 
   std::vector<std::vector<cv::Point>> quads;
   for (auto contour : contours) {
@@ -141,7 +144,7 @@ void cannyEdgeMethod(cv::Mat image) {
 
   sortQuadCorners(centered);
   for (auto &point : centered) {
-    point *= 8;
+    point *= 1. / scaleFactor;
   }
 
   auto destDimensions = getDimensions(centered);
@@ -155,33 +158,30 @@ void cannyEdgeMethod(cv::Mat image) {
   std::vector<cv::Point2f> points;
   convertPoints(centered, points);
   const cv::Mat transMat = cv::getPerspectiveTransform(points, targetPoints);
-  cv::warpPerspective(image, target, transMat, target.size());
-
-  cv::imshow("transformed", target);
-  cv::imwrite("transformed.jpg", target);
-
-  cv::waitKey();
+  cv::warpPerspective(image, output, transMat, target.size());
 }
 
 int main(int argc, char** argv) {
-  if (argc != 2) {
-    std::cout << "Usage: ./bigsals <image file>" << std::endl;
+  if (argc != 3) {
+    std::cout << "Usage: ./bigsals <input file> <output file>" << std::endl;
     return -1;
   }
 
   auto imageFilename = argv[1];
-
-  // Step 1: get the image.
+  auto outputFilename = argv[2];
 
   cv::Mat image;
+  cv::Mat output;
   image = cv::imread(imageFilename, 1);
+  output = cv::imread(outputFilename, 1);
 
   if (image.empty()) {
     std::cerr << "Unable to open image" << std::endl;
     return -1;
   }
 
-  cannyEdgeMethod(image);
+  cannyEdgeMethod(image, output);
+  cv::imwrite(outputFilename, output);
 
   return 0;
 }

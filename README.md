@@ -4,6 +4,9 @@ This is just me practicing to write a scanner application for camera photos. Ins
 
 **This is still a work in progress**.
 
+![original](helloworld.jpg)
+![original](output.jpg)
+
 ## Usage
 
 ```
